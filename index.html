@@ -62,16 +62,16 @@
         var soggetto;
         if(tipo != null && (tipo.toLowerCase() == 'starconcept' || tipo.toLowerCase() == 'concetto' || tipo.toLowerCase() == 'concept' )) {
             tipo = 'starConcept';
-            soggetto = prompt("Scegli tra " + listaconcetti,"Book"); 
+            soggetto = prompt("Scegli tra:  " + listaconcetti,listaconcetti[0]); 
         }
 
         if(tipo != null && (tipo.toLowerCase() == 'starrole' || tipo.toLowerCase() == 'ruolo' || tipo.toLowerCase() == 'role') ){
             tipo = 'starRole';
-            soggetto = prompt("Scegli tra " + listaruoli,"Book"); 
+            soggetto = prompt("Scegli tra:  " + listaruoli,listaruoli[0]); 
         }
         //FINE INTERAZIONE
 
-        
+
         if(tipo != null && soggetto != null){
             
             
