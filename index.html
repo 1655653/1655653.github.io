@@ -12,6 +12,9 @@
     <script src='http://code.jquery.com/jquery-1.8.3.js'></script>
     <script src='cytoscape.js'></script>
     <script src='cytotools.js'></script>
+    <script language="JavaScript" type="text/javascript" src="/js/jquery-1.2.6.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/jquery-ui-personalized-1.5.2.packed.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/sprinkle.js"></script>
 
 </head>
 
@@ -114,7 +117,7 @@
                 name:'preset',
 
             }).run(); 
-            
+
             var nodes = cy.nodes('node');
 
             if(tipo == 'starConcept') GrapholyConcept(nodes);
