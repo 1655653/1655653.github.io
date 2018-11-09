@@ -564,7 +564,7 @@ function RoleGenerator(note,srcID,typeRole,ouoStarArr,typeOuo,roleOuoArr,aonName
     }
 }
 
-
+//PARSING DEL FILE JSON E CREAZIONE DEI NODI
 function jparse(text){
     var data = JSON.parse(text);
     //ho starConcept
@@ -1004,7 +1004,18 @@ function jparse(text){
     }
 }
 
-
+//sistema le label troppo grandi
+function fixSizeLabel(){
+    var conc = cy.$('node[type = "starConcept"],[type = "subConcept"],[type = "superConcept"],[type = "simpleSubConcept"],[type = "simpleConcept"]');
+    for (let i = 0; i < conc.length; i++) {
+        const element = conc[i];
+        var lab = element.style('label');
+        if(lab.length>11){
+            element.style('font-size',7);
+        }
+        
+    }
+}
 
 //readTextFile serve per leggere il json
 function readTextFile(file, callback) {
