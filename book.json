@@ -39,11 +39,11 @@
         {"writtenBy":{"Domain":["Book"],"Range":["Author"]}}    
     ],
     "Attributes":[
-        {"dateOfPublication":{"Domain":["Edition"],"ObjectProperty":"Functional"}},
-        {"editionNumber":{"Domain":["Edition"],"ObjectProperty":"Functional"}},
-        {"genre":{"Domain":["Book"],"ObjectProperty":"Functional"}},
-        {"title":{"Domain":["Book"],"ObjectProperty":"Functional"}},
-        {"name":{"ObjectProperty":"Functional"}}
+        {"dateOfPublication":{"Domain":["Edition"],"ObjectProperty":"Functional","Mandatory_in":["Edition"]}},
+        {"editionNumber":{"Domain":["Edition"],"ObjectProperty":"Functional","Mandatory_in":["Edition"]}},
+        {"genre":{"Domain":["Book"],"ObjectProperty":"Functional","Mandatory_in":["Book"]}},
+        {"title":{"Domain":["Book"],"ObjectProperty":"Functional","Mandatory_in":["Book"]}},
+        {"name":{"ObjectProperty":"Functional","Mandatory_in":["Editor","Author"]}}
     ],
     "Disjoint_Classes":[
         ":AudioBook :E_Book :PrintedBook"

@@ -463,6 +463,68 @@ function GrapholyRole( nodes ){
 
 }
 
+
+//GRAPHOLY SERVE PER CREARE IL LAYOUT IN STILE GRAPHOL 
+function GrapholyAttribute( nodes ){
+    var concepts = cy.$('node[type = "simpleConcept"]');
+    var ranes = cy.$('node[type = "value_domain"]');
+
+    var star = cy.$id(soggetto);
+    var starx = star.position('x');
+    var stary = star.position('y');
+    var n = 0;
+    var mp = 0;
+    var md = 0;
+    var m = 0;
+    var k = 0;
+    for (let i = 0; i < concepts.length; ++i){
+        const node = concepts[i];
+        nodeConcid = node.data('id');
+        var nodeExists = cy.$id('exists'+nodeConcid+soggetto);
+        
+        if( i % 2 != 0 ) {
+            n = 100;
+            if(i !=1 ) md += 40;
+            m = md;
+            // k = 10
+        }
+        else if( i % 2 == 0 ){
+            n = -100;
+            if(i !=0 ) mp += 40;
+            m = mp
+            // k = -100
+        } 
+        nodeExists.position({
+            x:starx + n,
+            y:stary + m 
+        })
+
+        node.position({
+            x:nodeExists.position('x') + n,
+            y:nodeExists.position('y')
+        })
+        
+    }
+    for (let i = 0; i < ranes.length; ++i){
+        const node = ranes[i];
+        nodeConcid = node.data('id');
+        var nodeExists = cy.$id('exists'+nodeConcid+soggetto);
+        nodeExists.position({
+            x:starx + k,
+            y:stary - 100 
+        })
+
+        node.position({
+            x:nodeExists.position('x'),
+            y:nodeExists.position('y') - 100
+        })
+
+        k+= -80
+
+    }
+
+}
+
 //GENERATORE DI CONCETTI PER STARROLE
 function ConceptGenerator( idSrc, idTargt, arrNodoExi, colorExists,typ, arrExitgt){ //crea nodo concetto + exists + archi
     cy.add([
@@ -846,7 +908,7 @@ function jparse(text){
     }
     //*****************************
     //ho starRole
-    else{
+    else if(tipo == 'starRole'){
         for (el in data.Roles){
             var obj = data.Roles[el];
             for(id in obj){
@@ -998,6 +1060,63 @@ function jparse(text){
                         }
                     }
                     //FINE CREAZIONE NODI SUPERRUOLO
+                }
+            }
+        }
+    }
+    //*****************************
+    //ho starAttribute
+    else{
+        for (el in data.Attributes){
+            var obj = data.Attributes[el];
+            for(id in obj){
+                if (id == soggetto){
+                    var star = obj[id];
+                    var typpo = "simpleAttribute";
+                    if(star.ObjectProperty == "Functional") typpo = "complexAttribute";
+                    cy.add([
+                        {
+                            group:'nodes',
+                            data: { id: soggetto, type: typpo},
+                        }
+                    ]);
+                    var both = false;
+                    var dom = [];
+                    if(star.Range != undefined){
+                        for(x in star.Range){
+                            var domvalue = star.Range[x];
+                            ConceptGenerator( domvalue, soggetto, "antinormal", 'existsB','value_domain',"antidescendant")
+                        }
+                    }
+                    if(star.Domain != undefined){
+                        for(x in star.Domain){
+                            var domConcept = star.Domain[x];
+                            for(y in star.Mandatory_in){
+                                var concMan = star.Mandatory_in[y];
+                                if(domConcept == concMan) both = true; 
+                            }
+                            if (both) ConceptGenerator( domConcept, soggetto, "doublenormal", 'existsW','simpleConcept',"antidescendant")
+                            else {
+                                ConceptGenerator( domConcept, soggetto, "antinormal", 'existsW','simpleConcept',"antidescendant")
+                            }
+                            both = false;
+                            dom.push(domConcept);
+                        }
+                    }
+
+                    if(star.Mandatory_in != undefined){
+                        for(x in star.Mandatory_in){
+                            manConcept = star.Mandatory_in[x];
+                            var present = false;
+                            for (let i = 0; i < dom.length; i++) {
+                                const doma = dom[i];
+                                if(doma == manConcept) present = true;
+                            }
+                            if(!present) ConceptGenerator( manConcept, soggetto, "normal", 'existsW','simpleConcept',"antidescendant")
+                        }
+                    }
+
+
                 }
             }
         }

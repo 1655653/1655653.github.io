@@ -39,6 +39,7 @@
         //INIZIO INTERAZIONE
         var listaconcetti = [];
         var listaruoli = [];
+        var listaattributi = [];
         readTextFile("book.json", function(text){
             var data = JSON.parse(text);
             for (el in data.Concepts){
@@ -53,11 +54,17 @@
                     listaruoli.push(id);
                 }
             }
+            for (el in data.Attributes){
+                var obj = data.Attributes[el];
+                for(id in obj){
+                    listaattributi.push(id);
+                }
+            }
         });
 
         var tipo;
         var soggetto;
-        $.each(["Concept","Role"],function(index,elem){
+        $.each(["Concept","Role","Attribute"],function(index,elem){
             $('select[name = "conorrol"]').append(new Option(elem,index));
         });
         
@@ -70,11 +77,19 @@
                     $('select[name = "lista"]').append(new Option(elem,index));
                 });
             }
-            if($('select[name = "conorrol"] option:selected').text() == "Concept") {
+            else if($('select[name = "conorrol"] option:selected').text() == "Concept") {
                 tipo = "starConcept";
                 $('select[name = "lista"]').empty();
                 $('select[name = "lista"]').append(new Option("---",0));
                 $.each(listaconcetti,function(index,elem){
+                    $('select[name = "lista"]').append(new Option(elem,index));
+                });
+            }
+            else if($('select[name = "conorrol"] option:selected').text() == "Attribute") {
+                tipo = "starAttribute";
+                $('select[name = "lista"]').empty();
+                $('select[name = "lista"]').append(new Option("---",0));
+                $.each(listaattributi,function(index,elem){
                     $('select[name = "lista"]').append(new Option(elem,index));
                 });
             }
@@ -95,7 +110,6 @@
             });
         
             
-            
             //INIZIO PARSING DEL JSON
             
             readTextFile("book.json", jparse);
@@ -112,9 +126,10 @@
             var nodes = cy.nodes('node');
 
             if(tipo == 'starConcept') GrapholyConcept(nodes);
-            else GrapholyRole(nodes);
+            else if(tipo == 'starRole') GrapholyRole(nodes);
+            else if(tipo == 'starAttribute') GrapholyAttribute(nodes);
 
-            cy.fit(cy.$id(soggetto),300);
+            cy.fit(cy.$id(soggetto),280);
             //FINE GESTIONE LAYOUT
             
             //INIZIO GESTIONE NODI FAKE 
