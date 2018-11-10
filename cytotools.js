@@ -463,7 +463,6 @@ function GrapholyRole(){
 
 }
 
-
 //GRAPHOLY SERVE PER CREARE IL LAYOUT IN STILE GRAPHOL 
 function GrapholyAttribute(){
     var concepts = cy.$('node[type = "simpleConcept"]');
