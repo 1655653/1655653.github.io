@@ -1,5 +1,5 @@
 //GRAPHOLY SERVE PER CREARE IL LAYOUT IN STILE GRAPHOL
-function GrapholyConcept( nodes ){
+function GrapholyConcept(){
     var attributes = cy.$('node[type = "simpleAttribute"],[type = "complexAttribute"]');
     var roles = cy.$('node[type = "simpleRole"],[type = "doubleSimpleRole"],[type = "complexRole"],[type = "doubleComplexRole"]');
     var subouos = cy.$('node[type = "subOuo"],[type = "subAndornot"],[type = "simpleSubConcept"]');
@@ -365,7 +365,7 @@ function AttrRoleGenerator( idSrc, idTargt, arrstyle, colorExists,typ){ //crea n
 }
 
 //GRAPHOLY SERVE PER CREARE IL LAYOUT IN STILE GRAPHOL 
-function GrapholyRole( nodes ){
+function GrapholyRole(){
     var concepts = cy.$('node[type = "simpleConcept"]');
     var subroles = cy.$('node[hint = "sub"]');
     var superoles = cy.$('node[hint = "super"]');
@@ -396,7 +396,7 @@ function GrapholyRole( nodes ){
 
             nodeExists.position({
                 x: starx + 100,
-                y: stary + n + 7
+                y: stary + n
             });
 
             node.position({
@@ -465,7 +465,7 @@ function GrapholyRole( nodes ){
 
 
 //GRAPHOLY SERVE PER CREARE IL LAYOUT IN STILE GRAPHOL 
-function GrapholyAttribute( nodes ){
+function GrapholyAttribute(){
     var concepts = cy.$('node[type = "simpleConcept"]');
     var ranes = cy.$('node[type = "value_domain"]');
 
@@ -624,6 +624,32 @@ function RoleGenerator(note,srcID,typeRole,ouoStarArr,typeOuo,roleOuoArr,aonName
             }
         ]);
     }
+}
+
+//sistema le label troppo grandi
+function fixSizeLabel(){
+    var conc = cy.$('node[type = "starConcept"],[type = "subConcept"],[type = "superConcept"],[type = "simpleSubConcept"],[type = "simpleConcept"]');
+    for (let i = 0; i < conc.length; i++) {
+        const element = conc[i];
+        var lab = element.style('label');
+        if(lab.length>11){
+            element.style('font-size',7);
+        }
+        
+    }
+}
+
+//readTextFile serve per leggere il json
+function readTextFile(file, callback) {
+    var rawFile = new XMLHttpRequest();
+    rawFile.overrideMimeType("application/json");
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function() {
+        if (rawFile.readyState === 4 && rawFile.status == "200") {
+            callback(rawFile.responseText);
+        }
+    }
+    rawFile.send(null);
 }
 
 //PARSING DEL FILE JSON E CREAZIONE DEI NODI
@@ -1122,31 +1148,3 @@ function jparse(text){
         }
     }
 }
-
-//sistema le label troppo grandi
-function fixSizeLabel(){
-    var conc = cy.$('node[type = "starConcept"],[type = "subConcept"],[type = "superConcept"],[type = "simpleSubConcept"],[type = "simpleConcept"]');
-    for (let i = 0; i < conc.length; i++) {
-        const element = conc[i];
-        var lab = element.style('label');
-        if(lab.length>11){
-            element.style('font-size',7);
-        }
-        
-    }
-}
-
-//readTextFile serve per leggere il json
-function readTextFile(file, callback) {
-    var rawFile = new XMLHttpRequest();
-    rawFile.overrideMimeType("application/json");
-    rawFile.open("GET", file, false);
-    rawFile.onreadystatechange = function() {
-        if (rawFile.readyState === 4 && rawFile.status == "200") {
-            callback(rawFile.responseText);
-        }
-    }
-    rawFile.send(null);
-}
-
-

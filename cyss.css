@@ -2,7 +2,7 @@
         width: 100%;
         height: 100%;
         position: absolute;
-        top: 50px;
+        top: 100px;
         left: 0px;
     }
     select,button{
@@ -16,9 +16,10 @@
     em{
         font-family: sans-serif;
     }
+    
     #cc{
         background-color: rgb(231, 231, 203);
-        padding-left: 400px;
+        /* padding-left: 400px; */
         padding-bottom: 5px;
         border-bottom-width:1.5px;
         border-bottom-color:black;
