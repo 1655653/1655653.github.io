@@ -102,7 +102,7 @@
                     }
                 }
             });
-
+            $('select[name = "conorrol"]').empty();
             $.each(["Concept","Role","Attribute"],function(index,elem){
                 $('select[name = "conorrol"]').append(new Option(elem,index));
             });
