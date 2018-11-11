@@ -46,7 +46,7 @@
 
         function loadFile() {
             var input, file, fr
-
+            
             if (typeof window.FileReader !== 'function') {
                 alert("The file API isn't supported on this browser yet.");
                 return;
@@ -72,6 +72,7 @@
 
             function receivedText(e) {
                 let lines = e.target.result;
+                console.log(name);
                 initialize(name,lines);
             }
 
@@ -103,7 +104,7 @@
                 }
             });
             $('select[name = "conorrol"]').empty();
-            $.each(["Concept","Role","Attribute"],function(index,elem){
+            $.each(["---","Concept","Role","Attribute"],function(index,elem){
                 $('select[name = "conorrol"]').append(new Option(elem,index));
             });
             
