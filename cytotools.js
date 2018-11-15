@@ -702,11 +702,13 @@ function jparse(text){
                             maStarRole.push(star.Mandatory_Roles[h]);
                         }
                     }
+                    
                     if( star.Optional_Roles != undefined){
                         for(h in star.Optional_Roles ){
                             opStarRole.push(star.Optional_Roles[h]);
                         }
                     }
+
                 }
             }
         }
@@ -773,14 +775,18 @@ function jparse(text){
                         }
                         else{
                             AttrRoleGenerator(singleAttr,soggetto,'doublenormal','existsW','simpleAttribute');
+
                         }
                     }
                     else{
                         if(funct == true){
                             AttrRoleGenerator(singleAttr,soggetto,'antinormal','existsW','complexAttribute');
+                            console.log("788")
+
                         }
                         else{
                             AttrRoleGenerator(singleAttr,soggetto,'antinormal','existsW','simpleAttribute');
+
                         }
                     }
                 }
@@ -845,7 +851,7 @@ function jparse(text){
                             
                         }
                     }
-                    var ex;
+                    var ex = 'existsW';
                     var arr = 'normal';
                     var complexity;
                     if(dom == true){
