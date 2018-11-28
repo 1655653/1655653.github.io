@@ -781,7 +781,6 @@ function jparse(text){
                     else{
                         if(funct == true){
                             AttrRoleGenerator(singleAttr,soggetto,'antinormal','existsW','complexAttribute');
-                            console.log("788")
 
                         }
                         else{
@@ -977,7 +976,7 @@ function jparse(text){
                             for(y in data.Concepts){
                                 var manCpt = data.Concepts[y];
                                 for(z in manCpt){
-                                    if(z == domConcept){
+                                    if(z == domConcept && manCpt[z].Mandatory_Roles != undefined){
                                         var manRol = manCpt[z].Mandatory_Roles;
                                         for (let i = 0; i < manRol.length; i++) {
                                             if (manRol[i] == soggetto)
